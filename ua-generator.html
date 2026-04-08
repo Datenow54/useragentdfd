@@ -1,140 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>Advanced User-Agent Generator</title>
-<style>
-body {
-  font-family: Arial;
-  background: #111;
-  color: #fff;
-  text-align: center;
-  padding: 20px;
-}
-select, button {
-  padding: 10px;
-  margin: 10px;
-  font-size: 16px;
-}
-textarea {
-  width: 90%;
-  height: 120px;
-  margin-top: 20px;
-  font-size: 14px;
-}
-</style>
+<title>UA Generator</title>
 </head>
-<body>
+<body style="font-family:Arial;text-align:center;padding:20px;background:#111;color:#fff">
 
-<h2>🔥 Advanced UA Generator (CPA Safe)</h2>
+<h2>UA Generator</h2>
 
-<select id="device">
-  <option value="android">Android</option>
-  <option value="iphone">iPhone</option>
-  <option value="ipad">iPad</option>
-  <option value="windows">Windows</option>
-  <option value="mac">Mac</option>
-</select>
+<button onclick="gen()">Generate UA</button>
 
-<select id="browser">
-  <option value="chrome">Chrome</option>
-  <option value="firefox">Firefox</option>
-</select>
+<br><br>
 
-<select id="app">
-  <option value="none">Browser Only</option>
-  <option value="facebook">Facebook</option>
-  <option value="reddit">Reddit</option>
-  <option value="instagram">Instagram</option>
-</select>
-
-<br>
-
-<button onclick="generateUA()">Generate UA</button>
-
-<textarea id="output" placeholder="Generated UA will appear here..."></textarea>
+<textarea id="out" style="width:90%;height:150px"></textarea>
 
 <script>
-function random(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+function rand(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
 
-function chromeVersion() {
-  return random(133,146) + ".0." + random(1000,9999) + "." + random(50,200);
-}
+function gen(){
+  let chrome = rand(133,146);
+  let ua =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
+  "(KHTML, like Gecko) Chrome/" + chrome + ".0." + rand(1000,9999) +
+  "." + rand(50,200) + " Safari/537.36";
 
-function firefoxVersion() {
-  return random(110,130) + ".0";
-}
-
-function androidVersion() {
-  return random(10,14);
-}
-
-function iosVersion() {
-  return random(15,18) + "_" + random(0,5);
-}
-
-function generateUA() {
-  let device = document.getElementById("device").value;
-  let browser = document.getElementById("browser").value;
-  let app = document.getElementById("app").value;
-
-  let ua = "";
-
-  if(device === "android") {
-    let ver = androidVersion();
-    if(browser === "chrome") {
-      ua = `Mozilla/5.0 (Linux; Android ${ver}; SM-G9${random(50,99)}F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion()} Mobile Safari/537.36`;
-    } else {
-      ua = `Mozilla/5.0 (Android ${ver}; Mobile; rv:${firefoxVersion()}) Gecko/${firefoxVersion()} Firefox/${firefoxVersion()}`;
-    }
-  }
-
-  if(device === "iphone") {
-    let ver = iosVersion();
-    if(browser === "chrome") {
-      ua = `Mozilla/5.0 (iPhone; CPU iPhone OS ${ver} like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/${chromeVersion()} Mobile/15E148 Safari/604.1`;
-    } else {
-      ua = `Mozilla/5.0 (iPhone; CPU iPhone OS ${ver} like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/${firefoxVersion()} Mobile/15E148 Safari/605.1.15`;
-    }
-  }
-
-  if(device === "ipad") {
-    let ver = iosVersion();
-    ua = `Mozilla/5.0 (iPad; CPU OS ${ver} like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1`;
-  }
-
-  if(device === "windows") {
-    if(browser === "chrome") {
-      ua = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion()} Safari/537.36`;
-    } else {
-      ua = `Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:${firefoxVersion()}) Gecko/20100101 Firefox/${firefoxVersion()}`;
-    }
-  }
-
-  if(device === "mac") {
-    if(browser === "chrome") {
-      ua = `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_${random(13,15)}_${random(0,7)}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion()} Safari/537.36`;
-    } else {
-      ua = `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_${random(13,15)}_${random(0,7)}; rv:${firefoxVersion()}) Gecko/20100101 Firefox/${firefoxVersion()}`;
-    }
-  }
-
-  // App Layer
-  if(app === "facebook") {
-    ua += ` [FBAN/FBIOS;FBAV/${random(300,450)}.0.0.${random(10,50)}.${random(50,150)};FBBV/${random(200000000,400000000)};]`;
-  }
-
-  if(app === "reddit") {
-    ua += ` Reddit/${random(2024,2026)}.${random(1,10)}.${random(1,10)}`;
-  }
-
-  if(app === "instagram") {
-    ua += ` Instagram ${random(250,350)}.0.0.${random(10,50)}.${random(50,150)}`;
-  }
-
-  document.getElementById("output").value = ua;
+  document.getElementById("out").value = ua;
 }
 </script>
 
